@@ -1,0 +1,23 @@
+#  ██████╗ ███████╗ █████╗  ██████╗ ██████╗ ███╗   ██╗
+#  ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔═══██╗████╗  ██║
+#  ██████╔╝█████╗  ███████║██║     ██║   ██║██╔██╗ ██║
+#  ██╔══██╗██╔══╝  ██╔══██║██║     ██║   ██║██║╚██╗██║
+#  ██████╔╝███████╗██║  ██║╚██████╗╚██████╔╝██║ ╚████║
+#  ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝
+# Beacon Configuration
+#
+# In order to send an email, you'll need to provide
+#  - pass       (string)       - Generated in Google account settings
+#  - sender     (string)       - Your email
+#  - subject    (string)       - Your email's subject line
+#  - body       (string)       - The message you want to send 
+#  - Recipients (list|string)  - The list of recievers
+
+pass: app password
+sender: johndoe@gmail.com 
+subject: subject of your email 
+body: "body of your email"
+
+recipients:
+  - janedoe@gmail.com
+  - jeff@gmail.com
