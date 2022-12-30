@@ -14,7 +14,7 @@
 #  - Recipients (list|string)  - The list of recievers
 
 pass: app password
-sender: johndoe@gmail.com 
+sender: johngoodman@gmail.com 
 subject: subject of your email 
 body: "body of your email"
 
