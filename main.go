@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+    "os"
 	"net/smtp"
 
 	"github.com/spf13/viper"
@@ -33,12 +34,35 @@ func (e *Email) Send(server, port string) (err error) {
     return
 }
 
+func SetPathFile() (string, error) {
+    homeDir, err := os.UserHomeDir()
+    if err != nil {
+        log.Fatal("error finding home")
+        return "", err
+    }
+
+    path := fmt.Sprintf("%v/.config/beacon/", homeDir)
+
+    if _, err = os.Stat(path); os.IsNotExist(err) {
+        err = os.MkdirAll(path, 0750)
+        if err != nil {
+            return "", err
+        }
+    } 
+
+    return path + "beacon.yml", nil
+}
 
 func LoadConfig() (config Email, err error) {
+    
+    pathFile, pathError := SetPathFile()
+    if pathError != nil {
+        return 
+    }
 
 	config_file := viper.New()
-	config_file.AddConfigPath(".")
-	config_file.SetConfigFile("email.yml")
+    config_file.SetConfigType("yaml")
+    config_file.SetConfigFile(pathFile)
 
 	err = config_file.ReadInConfig()
 	if err != nil {
