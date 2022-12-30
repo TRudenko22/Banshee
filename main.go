@@ -20,17 +20,17 @@ type Email struct {
 func (e *Email) Send(server, port string) (err error) {
 
 	// Auth via Sender app password
-	auth := smtp.PlainAuth("", e.Sender, e.Pass, server,)
+    auth := smtp.PlainAuth("", e.Sender, e.Pass, server,)
 
-  err = smtp.SendMail(
-		fmt.Sprintf("%v:%v", server, port),
+    err = smtp.SendMail(
+	    fmt.Sprintf("%v:%v", server, port),
 		auth,
 		e.Sender,
 		e.Recipients,
 		[]byte(fmt.Sprintf("Subject: %v \r\n\r\n%v", e.Subject, e.Body)),
 	) 
   
-  return
+    return
 }
 
 
@@ -42,7 +42,7 @@ func LoadConfig() (config Email, err error) {
 
 	err = config_file.ReadInConfig()
 	if err != nil {
-    		return 
+        return 
 	}
 
 	err = config_file.Unmarshal(&config)
@@ -54,11 +54,11 @@ func main() {
 
 	email, err := LoadConfig()
 	if err != nil {
-    		log.Fatal("Error reading configuration: ", err)
+    	log.Fatal("Error reading configuration: ", err)
 	}
 
 	err = email.Send("smtp.gmail.com", "587")
   	if err != nil {
-    		log.Fatal("Error Sending Email: Check Configuration Variables")
+    	log.Fatal("Error Sending Email: Check Configuration Variables")
   	}
 }
