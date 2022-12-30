@@ -42,7 +42,7 @@ func LoadConfig() (config Email, err error) {
 
 	err = config_file.ReadInConfig()
 	if err != nil {
-    return 
+    		return 
 	}
 
 	err = config_file.Unmarshal(&config)
@@ -54,11 +54,11 @@ func main() {
 
 	email, err := LoadConfig()
 	if err != nil {
-    log.Fatal("Error reading configuration: ", err)
+    		log.Fatal("Error reading configuration: ", err)
 	}
 
 	err = email.Send("smtp.gmail.com", "587")
-  if err != nil {
-    log.Fatal("Error Sending Email: Check Configuration Variables")
-  }
+  	if err != nil {
+    		log.Fatal("Error Sending Email: Check Configuration Variables")
+  	}
 }
