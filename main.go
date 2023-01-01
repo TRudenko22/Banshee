@@ -28,19 +28,19 @@ func (e *Email) Send(server, port string) (err error) {
 		auth,
 		e.Sender,
 		e.Recipients,
-		[]byte(fmt.Sprintf("Subject: %v \r\n\r\n%v", e.Subject, e.Body)),
+		[]byte(fmt.Sprintf("Subject: %s \r\n\r\n%s", e.Subject, e.Body)),
 	)
 
 	for _, i := range e.Recipients {
-		log.Printf("%v  -->  %v\n", e.Sender, i)
+		log.Printf("%s  -->  %s\n", e.Sender, i)
 	}
 
 	return
 }
 
 func (e *Email) Output() {
-	fmt.Printf("Sender  : %v\n", e.Sender)
-	fmt.Printf("Subject : %v\n", e.Subject)
+	fmt.Printf("Sender  : %s\n", e.Sender)
+	fmt.Printf("Subject : %s\n", e.Subject)
 }
 
 // Creates /home/$USER/.config/beacon directory
@@ -50,12 +50,12 @@ func SetPathFile() (string, error) {
 		return "", fmt.Errorf("error locating home directory")
 	}
 
-	path := fmt.Sprintf("%v/.config/beacon/", homeDir)
+	path := fmt.Sprintf("%s/.config/beacon/", homeDir)
 
 	if _, err = os.Stat(path); os.IsNotExist(err) {
 		err = os.MkdirAll(path, 0750)
 		if err != nil {
-			return "", fmt.Errorf("error creating %v", path)
+			return "", fmt.Errorf("error creating %s", path)
 		}
 	}
 
