@@ -43,14 +43,14 @@ func (e *Email) Output() {
 	fmt.Printf("Subject : %s\n", e.Subject)
 }
 
-// Creates /home/$USER/.config/beacon directory
+// Creates /home/$USER/.config/banshee directory
 func SetPathFile() (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", fmt.Errorf("error locating home directory")
 	}
 
-	path := fmt.Sprintf("%s/.config/beacon/", homeDir)
+	path := fmt.Sprintf("%s/.config/banshee/", homeDir)
 
 	if _, err = os.Stat(path); os.IsNotExist(err) {
 		err = os.MkdirAll(path, 0750)
@@ -59,10 +59,10 @@ func SetPathFile() (string, error) {
 		}
 	}
 
-	return path + "beacon.yml", nil
+	return path + "banshee.yml", nil
 }
 
-// Takes ~/.config/beacon/beacon.yml and returns an Email struct
+// Takes ~/.config/banshee/banshee.yml and returns an Email struct
 func LoadConfig() (config Email, err error) {
 
 	pathFile, pathError := SetPathFile()
