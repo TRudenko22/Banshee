@@ -1,5 +1,3 @@
-
-# Banshee
 ![Logo](./banshee.png)
 
 ![Size](https://img.shields.io/github/repo-size/TRudenko22/Banshee)

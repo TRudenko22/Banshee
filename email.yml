@@ -1,10 +1,10 @@
-#  ██████╗ ███████╗ █████╗  ██████╗ ██████╗ ███╗   ██╗
-#  ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔═══██╗████╗  ██║
-#  ██████╔╝█████╗  ███████║██║     ██║   ██║██╔██╗ ██║
-#  ██╔══██╗██╔══╝  ██╔══██║██║     ██║   ██║██║╚██╗██║
-#  ██████╔╝███████╗██║  ██║╚██████╗╚██████╔╝██║ ╚████║
-#  ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝
-# Beacon Configuration
+#  ██████╗  █████╗ ███╗   ██╗███████╗██╗  ██╗███████╗███████╗
+#  ██╔══██╗██╔══██╗████╗  ██║██╔════╝██║  ██║██╔════╝██╔════╝
+#  ██████╔╝███████║██╔██╗ ██║███████╗███████║█████╗  █████╗  
+#  ██╔══██╗██╔══██║██║╚██╗██║╚════██║██╔══██║██╔══╝  ██╔══╝  
+#  ██████╔╝██║  ██║██║ ╚████║███████║██║  ██║███████╗███████╗
+#  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝
+# Banshee Configuration
 #
 # In order to send an email, you'll need to provide
 #  - pass       (string)       - Generated in Google account settings
@@ -16,7 +16,10 @@
 pass: app password
 sender: johngoodman@gmail.com 
 subject: subject of your email 
-body: "body of your email"
+body: |
+  The body of your email can be multiline 
+ 
+  You'll want to wrap any links you have in qoutes
 
 recipients:
   - janedoe@gmail.com
