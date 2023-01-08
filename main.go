@@ -63,11 +63,13 @@ func SetPathFile() (string, error) {
 }
 
 // Takes ~/.config/banshee/banshee.yml and returns an Email struct
-func LoadConfig() (config Email, err error) {
+func LoadConfig(pathFile string) (config Email, err error) {
 
-	pathFile, pathError := SetPathFile()
-	if pathError != nil {
-		return
+	if pathFile == "" {
+		pathFile, err = SetPathFile()
+		if err != nil {
+			return
+		}
 	}
 
 	config_file := viper.New()
@@ -85,10 +87,23 @@ func LoadConfig() (config Email, err error) {
 }
 
 func main() {
+	var email Email
+	var err error
+	args := os.Args[1:]
 
-	email, err := LoadConfig()
-	if err != nil {
-		log.Fatal(err)
+	if len(args) > 0 {
+		if args[0] == "-f" {
+			pathfile := os.Args[2]
+			email, err = LoadConfig(pathfile)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	} else {
+		email, err = LoadConfig("")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	email.Output()
