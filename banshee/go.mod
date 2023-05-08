@@ -1,4 +1,4 @@
-module beacon
+module banshee
 
 go 1.18
 

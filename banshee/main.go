@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/smtp"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/viper"
 )
@@ -43,38 +44,34 @@ func (e *Email) Output() {
 	fmt.Printf("Subject : %s\n", e.Subject)
 }
 
-// Creates /home/$USER/.config/banshee directory
-func SetPathFile() (string, error) {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		return "", fmt.Errorf("error locating home directory")
-	}
-
-	path := fmt.Sprintf("%s/.config/banshee/", homeDir)
-
-	if _, err = os.Stat(path); os.IsNotExist(err) {
-		err = os.MkdirAll(path, 0750)
-		if err != nil {
-			return "", fmt.Errorf("error creating %s", path)
-		}
-	}
-
-	return path + "banshee.yml", nil
-}
-
 // Takes ~/.config/banshee/banshee.yml and returns an Email struct
-func LoadConfig(pathFile string) (config Email, err error) {
+func LoadConfig(path string) (config Email, err error) {
 
-	if pathFile == "" {
-		pathFile, err = SetPathFile()
-		if err != nil {
-			return
+	if path == "" {
+		return Email{}, fmt.Errorf("No configuration path present")
+	}
+
+	lstFiles, err := os.ReadDir(path)
+	if err != nil {
+		return
+	}
+
+	configFile := ""
+	for _, file := range lstFiles {
+		ext := filepath.Ext(file.Name())
+		if ext == ".yml" || ext == ".yaml" {
+			configFile = file.Name()
+			log.Println("FOUND", file.Name())
 		}
+	}
+
+	if configFile == "" {
+		return Email{}, fmt.Errorf("Couldn't file a YAML configuration")
 	}
 
 	config_file := viper.New()
 	config_file.SetConfigType("yaml")
-	config_file.SetConfigFile(pathFile)
+	config_file.SetConfigFile(path + configFile)
 
 	err = config_file.ReadInConfig()
 	if err != nil {
@@ -86,24 +83,18 @@ func LoadConfig(pathFile string) (config Email, err error) {
 	return
 }
 
+var (
+	emailServer = os.Getenv("EMAIL_SERVER")
+	emailPort   = os.Getenv("EMAIL_PORT")
+)
+
 func main() {
 	var email Email
 	var err error
-	args := os.Args[1:]
 
-	if len(args) > 0 {
-		if args[0] == "-f" {
-			pathfile := os.Args[2]
-			email, err = LoadConfig(pathfile)
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-	} else {
-		email, err = LoadConfig("")
-		if err != nil {
-			log.Fatal(err)
-		}
+	email, err = LoadConfig("/data/")
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	email.Output()
